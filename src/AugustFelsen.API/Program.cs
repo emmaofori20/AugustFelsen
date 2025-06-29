@@ -57,11 +57,17 @@ builder.Services.AddAuthentication(options =>
 // Configure CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins", policy =>
+    options.AddPolicy("AllowNetlify", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+            "https://augustfelsen.netlify.app",
+            "http://localhost:4200",
+            "https://localhost:4200",
+            "https://localhost:4201",
+            "http://localhost:4201"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 
@@ -127,7 +133,7 @@ app.UseSwaggerUI(c =>
 app.UseHttpsRedirection();
 
 //app.UseCors("AllowAngularApp
-app.UseCors("AllowAllOrigins");
+app.UseCors("AllowNetlify");
 
 app.UseAuthentication();
 app.UseAuthorization();
